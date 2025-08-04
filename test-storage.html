@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storage Test - Portfolio Admin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Portfolio Storage Test</h1>
+    
+    <div class="test-section">
+        <h2>Test localStorage Functionality</h2>
+        <button onclick="testBasicStorage()">Test Basic Storage</button>
+        <button onclick="testPortfolioData()">Test Portfolio Data</button>
+        <button onclick="clearAllData()">Clear All Data</button>
+        <button onclick="loadDefaultData()">Load Default Data</button>
+        <div id="testResults"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Current Portfolio Data</h2>
+        <button onclick="displayCurrentData()">Refresh Data</button>
+        <pre id="currentData">Click "Refresh Data" to see current portfolio data</pre>
+    </div>
+    
+    <div class="test-section">
+        <h2>Quick Actions</h2>
+        <button onclick="window.open('admin.html', '_blank')">Open Admin Panel</button>
+        <button onclick="window.open('index.html', '_blank')">Open Portfolio</button>
+    </div>
+
+    <script>
+        const STORAGE_KEYS = {
+            PORTFOLIO_DATA: 'portfolio_data',
+            IS_LOGGED_IN: 'admin_logged_in'
+        };
+
+        const DEFAULT_PORTFOLIO_DATA = {
+            navName: 'Naor Beeri',
+            hero: {
+                name: 'Naor Beeri',
+                title: 'Full Stack Developer & Creative Problem Solver',
+                description: 'I create innovative digital solutions that combine cutting-edge technology with exceptional user experiences.'
+            },
+            about: {
+                text1: 'I\'m a passionate developer with a love for creating meaningful digital experiences.',
+                text2: 'When I\'m not coding, you can find me exploring new technologies.',
+                stats: {
+                    experience: 3,
+                    projects: 20
+                }
+            },
+            skills: {
+                frontend: [
+                    { name: 'HTML5', icon: 'fab fa-html5' },
+                    { name: 'CSS3', icon: 'fab fa-css3-alt' }
+                ],
+                backend: [
+                    { name: 'Node.js', icon: 'fab fa-node-js' },
+                    { name: 'Python', icon: 'fab fa-python' }
+                ],
+                tools: [
+                    { name: 'Git', icon: 'fab fa-git-alt' },
+                    { name: 'Docker', icon: 'fab fa-docker' }
+                ]
+            },
+            projects: [
+                {
+                    title: 'Test Project',
+                    description: 'This is a test project to verify storage functionality.',
+                    technologies: 'React, Node.js',
+                    github: '#',
+                    demo: '#'
+                }
+            ],
+            footer: {
+                text: '&copy; 2025 Naor Beeri. All rights reserved.'
+            }
+        };
+
+        function log(message, type = 'info') {
+            const results = document.getElementById('testResults');
+            const div = document.createElement('div');
+            div.className = type;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            results.appendChild(div);
+            console.log(message);
+        }
+
+        function testBasicStorage() {
+            try {
+                // Test basic localStorage functionality
+                localStorage.setItem('test_key', 'test_value');
+                const retrieved = localStorage.getItem('test_key');
+                
+                if (retrieved === 'test_value') {
+                    log('✅ Basic localStorage test passed', 'success');
+                } else {
+                    log('❌ Basic localStorage test failed', 'error');
+                }
+                
+                localStorage.removeItem('test_key');
+            } catch (error) {
+                log(`❌ localStorage error: ${error.message}`, 'error');
+            }
+        }
+
+        function testPortfolioData() {
+            try {
+                // Test portfolio data storage
+                localStorage.setItem(STORAGE_KEYS.PORTFOLIO_DATA, JSON.stringify(DEFAULT_PORTFOLIO_DATA));
+                const retrieved = localStorage.getItem(STORAGE_KEYS.PORTFOLIO_DATA);
+                const parsed = JSON.parse(retrieved);
+                
+                if (parsed.hero && parsed.hero.name === 'Naor Beeri') {
+                    log('✅ Portfolio data storage test passed', 'success');
+                } else {
+                    log('❌ Portfolio data storage test failed', 'error');
+                }
+            } catch (error) {
+                log(`❌ Portfolio data storage error: ${error.message}`, 'error');
+            }
+        }
+
+        function clearAllData() {
+            try {
+                localStorage.removeItem(STORAGE_KEYS.PORTFOLIO_DATA);
+                localStorage.removeItem(STORAGE_KEYS.IS_LOGGED_IN);
+                log('✅ All portfolio data cleared', 'success');
+                displayCurrentData();
+            } catch (error) {
+                log(`❌ Error clearing data: ${error.message}`, 'error');
+            }
+        }
+
+        function loadDefaultData() {
+            try {
+                localStorage.setItem(STORAGE_KEYS.PORTFOLIO_DATA, JSON.stringify(DEFAULT_PORTFOLIO_DATA));
+                log('✅ Default portfolio data loaded', 'success');
+                displayCurrentData();
+            } catch (error) {
+                log(`❌ Error loading default data: ${error.message}`, 'error');
+            }
+        }
+
+        function displayCurrentData() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEYS.PORTFOLIO_DATA);
+                const loginStatus = localStorage.getItem(STORAGE_KEYS.IS_LOGGED_IN);
+                
+                const displayData = {
+                    portfolioData: data ? JSON.parse(data) : 'No data found',
+                    loginStatus: loginStatus || 'Not logged in',
+                    timestamp: new Date().toLocaleString()
+                };
+                
+                document.getElementById('currentData').textContent = JSON.stringify(displayData, null, 2);
+                log('✅ Current data displayed', 'success');
+            } catch (error) {
+                log(`❌ Error displaying data: ${error.message}`, 'error');
+                document.getElementById('currentData').textContent = `Error: ${error.message}`;
+            }
+        }
+
+        // Auto-display data on page load
+        window.addEventListener('load', function() {
+            log('Storage test page loaded');
+            displayCurrentData();
+        });
+    </script>
+</body>
+</html> 

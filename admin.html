@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Naor Beeri Portfolio</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <h1><i class="fas fa-lock"></i> Admin Login</h1>
+                <p>Access the portfolio management panel</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <div class="login-footer">
+                <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+        <nav class="admin-nav">
+            <div class="nav-header">
+                <h2><i class="fas fa-cog"></i> Portfolio Admin</h2>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+            <ul class="nav-tabs">
+                <li class="nav-tab active" data-tab="hero">Hero Section</li>
+                <li class="nav-tab" data-tab="about">About Section</li>
+                <li class="nav-tab" data-tab="skills">Skills Section</li>
+                <li class="nav-tab" data-tab="projects">Projects Section</li>
+                <li class="nav-tab" data-tab="footer">Footer</li>
+            </ul>
+        </nav>
+
+        <main class="admin-content">
+            <!-- Hero Section Editor -->
+            <div id="heroTab" class="tab-content active">
+                <h3>Hero Section</h3>
+                <form id="heroForm" class="admin-form">
+                    <div class="form-group">
+                        <label for="navName">Navigation Bar Name</label>
+                        <input type="text" id="navName" name="navName" value="Naor Beeri">
+                    </div>
+                    <div class="form-group">
+                        <label for="heroName">Name</label>
+                        <input type="text" id="heroName" name="heroName" value="Naor Beeri">
+                    </div>
+                    <div class="form-group">
+                        <label for="heroTitle">Professional Title</label>
+                        <input type="text" id="heroTitle" name="heroTitle" value="Full Stack Developer & Creative Problem Solver">
+                    </div>
+                    <div class="form-group">
+                        <label for="heroDescription">Description</label>
+                        <textarea id="heroDescription" name="heroDescription" rows="3">I create innovative digital solutions that combine cutting-edge technology with exceptional user experiences.</textarea>
+                    </div>
+                    
+                    <!-- Profile Photo Upload Section -->
+                    <div class="form-group">
+                        <label>Profile Photo</label>
+                        <div class="photo-upload-container">
+                            <div class="current-photo">
+                                <img id="currentProfilePhoto" src="" alt="Current profile photo" style="display: none; max-width: 150px; border-radius: 50%;">
+                                <div id="noPhotoPlaceholder" class="no-photo-placeholder">
+                                    <i class="fas fa-user"></i>
+                                    <p>No photo uploaded</p>
+                                </div>
+                            </div>
+                            <div class="photo-upload-controls">
+                                <input type="file" id="profilePhotoInput" accept="image/*" style="display: none;">
+                                <button type="button" id="uploadPhotoBtn" class="btn btn-secondary">
+                                    <i class="fas fa-upload"></i> Upload Photo
+                                </button>
+                                <button type="button" id="removePhotoBtn" class="btn btn-danger" style="display: none;">
+                                    <i class="fas fa-trash"></i> Remove Photo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Photo Cropper Modal -->
+                    <div id="photoCropperModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4>Crop Profile Photo</h4>
+                                <button type="button" class="close-modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="cropper-container">
+                                    <div class="cropper-wrapper">
+                                        <img id="cropperImage" src="" alt="Crop this image">
+                                    </div>
+                                    <div class="cropper-controls">
+                                        <p>Drag to move, scroll to zoom. The circular area will be your profile photo.</p>
+                                        <div class="control-buttons">
+                                            <button type="button" id="cropPhotoBtn" class="btn btn-primary">
+                                                <i class="fas fa-crop"></i> Crop & Save
+                                            </button>
+                                            <button type="button" id="cancelCropBtn" class="btn btn-secondary">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+
+            <!-- About Section Editor -->
+            <div id="aboutTab" class="tab-content">
+                <h3>About Section</h3>
+                <form id="aboutForm" class="admin-form">
+                    <div class="form-group">
+                        <label for="aboutText1">First Paragraph</label>
+                        <textarea id="aboutText1" name="aboutText1" rows="4">I'm a passionate developer with a love for creating meaningful digital experiences. With expertise in both frontend and backend development, I bring ideas to life through clean, efficient code and intuitive design.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="aboutText2">Second Paragraph</label>
+                        <textarea id="aboutText2" name="aboutText2" rows="4">When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community.</textarea>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-input">
+                            <label for="stat1Number">Years Experience</label>
+                            <input type="number" id="stat1Number" name="stat1Number" value="3">
+                        </div>
+                        <div class="stat-input">
+                            <label for="stat2Number">Projects Completed</label>
+                            <input type="number" id="stat2Number" name="stat2Number" value="20">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+
+            <!-- Skills Section Editor -->
+            <div id="skillsTab" class="tab-content">
+                <h3>Skills Section</h3>
+                <div class="skills-editor">
+                    <div class="skill-category-editor">
+                        <h4>Frontend Skills</h4>
+                        <div id="frontendSkills" class="skill-list">
+                            <div class="skill-item-editor">
+                                <input type="text" placeholder="Skill name" value="HTML5">
+                                <input type="text" placeholder="Icon class" value="fab fa-html5">
+                                <button type="button" class="btn btn-danger btn-sm remove-skill"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="skill-item-editor">
+                                <input type="text" placeholder="Skill name" value="CSS3">
+                                <input type="text" placeholder="Icon class" value="fab fa-css3-alt">
+                                <button type="button" class="btn btn-danger btn-sm remove-skill"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="skill-item-editor">
+                                <input type="text" placeholder="Skill name" value="JavaScript">
+                                <input type="text" placeholder="Icon class" value="fab fa-js">
+                                <button type="button" class="btn btn-danger btn-sm remove-skill"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="skill-item-editor">
+                                <input type="text" placeholder="Skill name" value="React">
+                                <input type="text" placeholder="Icon class" value="fab fa-react">
+                                <button type="button" class="btn btn-danger btn-sm remove-skill"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary add-skill" data-category="frontend">Add Skill</button>
+                    </div>
+
+                    <div class="skill-category-editor">
+                        <h4>Backend Skills</h4>
+                        <div id="backendSkills" class="skill-list">
+                            <div class="skill-item-editor">
+                                <input type="text" placeholder="Skill name" value="Node.js">
+                                <input type="text" placeholder="Icon class" value="fab fa-node-js">
+                                <button type="button" class="btn btn-danger btn-sm remove-skill"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="skill-item-editor">
+                                <input type="text" placeholder="Skill name" value="Python">
+                                <input type="text" placeholder="Icon class" value="fab fa-python">
+                                <button type="button" class="btn btn-danger btn-sm remove-skill"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="skill-item-editor">
+                                <input type="text" placeholder="Skill name" value="SQL">
+                                <input type="text" placeholder="Icon class" value="fas fa-database">
+                                <button type="button" class="btn btn-danger btn-sm remove-skill"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="skill-item-editor">
+                                <input type="text" placeholder="Skill name" value="AWS">
+                                <input type="text" placeholder="Icon class" value="fab fa-aws">
+                                <button type="button" class="btn btn-danger btn-sm remove-skill"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary add-skill" data-category="backend">Add Skill</button>
+                    </div>
+
+                    <div class="skill-category-editor">
+                        <h4>Tools</h4>
+                        <div id="toolsSkills" class="skill-list">
+                            <div class="skill-item-editor">
+                                <input type="text" placeholder="Skill name" value="Git">
+                                <input type="text" placeholder="Icon class" value="fab fa-git-alt">
+                                <button type="button" class="btn btn-danger btn-sm remove-skill"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="skill-item-editor">
+                                <input type="text" placeholder="Skill name" value="Docker">
+                                <input type="text" placeholder="Icon class" value="fab fa-docker">
+                                <button type="button" class="btn btn-danger btn-sm remove-skill"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="skill-item-editor">
+                                <input type="text" placeholder="Skill name" value="Figma">
+                                <input type="text" placeholder="Icon class" value="fab fa-figma">
+                                <button type="button" class="btn btn-danger btn-sm remove-skill"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="skill-item-editor">
+                                <input type="text" placeholder="Skill name" value="CLI">
+                                <input type="text" placeholder="Icon class" value="fas fa-terminal">
+                                <button type="button" class="btn btn-danger btn-sm remove-skill"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary add-skill" data-category="tools">Add Skill</button>
+                    </div>
+                </div>
+                <button type="button" id="saveSkills" class="btn btn-primary">Save All Skills</button>
+            </div>
+
+            <!-- Projects Section Editor -->
+            <div id="projectsTab" class="tab-content">
+                <h3>Projects Section</h3>
+                <div id="projectsList" class="projects-list">
+                    <div class="project-editor">
+                        <h4>Project 1</h4>
+                        <div class="form-group">
+                            <label>Project Title</label>
+                            <input type="text" class="project-title" value="E-Commerce Platform">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="project-description" rows="3">A full-stack e-commerce solution with React frontend and Node.js backend, featuring user authentication, payment processing, and admin dashboard.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Technologies (comma separated)</label>
+                            <input type="text" class="project-tech" value="React, Node.js, MongoDB">
+                        </div>
+                        <div class="form-group">
+                            <label>GitHub Link</label>
+                            <input type="url" class="project-github" value="#">
+                        </div>
+                        <div class="form-group">
+                            <label>Live Demo Link</label>
+                            <input type="url" class="project-demo" value="#">
+                        </div>
+                        <button type="button" class="btn btn-danger remove-project">Remove Project</button>
+                    </div>
+
+                    <div class="project-editor">
+                        <h4>Project 2</h4>
+                        <div class="form-group">
+                            <label>Project Title</label>
+                            <input type="text" class="project-title" value="Task Management App">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="project-description" rows="3">A responsive task management application with real-time updates, drag-and-drop functionality, and team collaboration features.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Technologies (comma separated)</label>
+                            <input type="text" class="project-tech" value="Vue.js, Firebase, Vuetify">
+                        </div>
+                        <div class="form-group">
+                            <label>GitHub Link</label>
+                            <input type="url" class="project-github" value="#">
+                        </div>
+                        <div class="form-group">
+                            <label>Live Demo Link</label>
+                            <input type="url" class="project-demo" value="#">
+                        </div>
+                        <button type="button" class="btn btn-danger remove-project">Remove Project</button>
+                    </div>
+
+                    <div class="project-editor">
+                        <h4>Project 3</h4>
+                        <div class="form-group">
+                            <label>Project Title</label>
+                            <input type="text" class="project-title" value="Data Analytics Dashboard">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="project-description" rows="3">An interactive dashboard for data visualization and analytics, built with modern web technologies and real-time data integration.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Technologies (comma separated)</label>
+                            <input type="text" class="project-tech" value="D3.js, Python, Flask">
+                        </div>
+                        <div class="form-group">
+                            <label>GitHub Link</label>
+                            <input type="url" class="project-github" value="#">
+                        </div>
+                        <div class="form-group">
+                            <label>Live Demo Link</label>
+                            <input type="url" class="project-demo" value="#">
+                        </div>
+                        <button type="button" class="btn btn-danger remove-project">Remove Project</button>
+                    </div>
+                </div>
+                <button type="button" id="addProject" class="btn btn-secondary">Add New Project</button>
+                <button type="button" id="saveProjects" class="btn btn-primary">Save All Projects</button>
+            </div>
+
+            <!-- Footer Section Editor -->
+            <div id="footerTab" class="tab-content">
+                <h3>Footer Section</h3>
+                <form id="footerForm" class="admin-form">
+                    <div class="form-group">
+                        <label for="footerText">Footer Text</label>
+                        <input type="text" id="footerText" name="footerText" value="&copy; 2025 Naor Beeri. All rights reserved.">
+                        <small class="form-help">You can use HTML tags like &lt;strong&gt;, &lt;em&gt;, &lt;a&gt; for formatting</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html> 
