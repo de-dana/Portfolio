@@ -22,8 +22,3 @@ A modern, responsive portfolio website built with HTML, CSS, and JavaScript. Thi
 3. **Skills Section**: Technical skills organized by category
 4. **Projects Section**: Showcase of your work with links
 5. **Footer**: Copyright and additional links
----
-
-
-**Happy coding! 🚀** 
-
