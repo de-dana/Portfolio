@@ -1,4 +1,4 @@
-# Naor Beeri - Portfolio Website
+# Dana Hassan - Portfolio Website
 
 A modern, responsive portfolio website built with HTML, CSS, and JavaScript. This website showcases your skills, projects, and professional information in an elegant and interactive design.
 
@@ -253,5 +253,6 @@ If you need help customizing your portfolio or have questions about the code, fe
 This portfolio template is free to use and modify for personal and commercial projects.
 
 ---
+
 
 **Happy coding! 🚀** 
